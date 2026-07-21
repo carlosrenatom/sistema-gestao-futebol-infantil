@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sistema de Apoio e Organização do Futebol Infantil</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Charts.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">⚽</div>
+        <div class="brand-text">
+          <h1>Futebol Infantil</h1>
+          <small>Balneário Arroio do Silva</small>
+        </div>
+      </div>
+      <nav class="nav">
+        <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+        <button class="nav-btn" data-view="atletas">Atletas</button>
+        <button class="nav-btn" data-view="treinos">Treinos</button>
+        <button class="nav-btn" data-view="presenca">Presença</button>
+        <button class="nav-btn" data-view="comunicados">Comunicados</button>
+        <button class="nav-btn" data-view="relatorios">Relatórios</button>
+        <div class="sidebar-footer">Responsável: <strong>Carlos Renato</strong></div>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="main-header">
+        <div class="search">
+          <input id="searchInput" placeholder="Pesquisar atletas, turmas, eventos..." />
+        </div>
+        <div class="actions">
+          <button id="btnNewAthlete">+ Novo Atleta</button>
+          <button id="btnExportCSV">Exportar CSV</button>
+        </div>
+      </header>
+
+      <section id="view-dashboard" class="view active">
+        <h2>Dashboard</h2>
+        <div class="grid-3">
+          <div class="card small">
+            <h3 id="totalAtletas">0</h3>
+            <p>Atletas cadastrados</p>
+          </div>
+          <div class="card small">
+            <h3 id="totalTreinos">0</h3>
+            <p>Treinos programados</p>
+          </div>
+          <div class="card small">
+            <h3 id="presencaHoje">0%</h3>
+            <p>Presença média (última sessão)</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Frequência por turma</h3>
+          <canvas id="chartFreq" height="120"></canvas>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Próximos treinos</h3>
+            <ul id="proximosTreinos" class="list"></ul>
+          </div>
+          <div class="card">
+            <h3>Últimos comunicados</h3>
+            <ul id="ultimosComunicados" class="list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-atletas" class="view">
+        <h2>Atletas</h2>
+        <div class="card">
+          <table id="tableAtletas" class="table">
+            <thead>
+              <tr><th>Nome</th><th>Idade</th><th>Turma</th><th>Responsável</th><th>Ações</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="view-treinos" class="view">
+        <h2>Treinos</h2>
+        <div class="card">
+          <form id="formTreino" class="form-inline">
+            <input name="titulo" placeholder="Título do treino" required />
+            <input name="data" type="date" required />
+            <input name="hora" type="time" required />
+            <select name="turma">
+              <option value="A">Turma A</option>
+              <option value="B">Turma B</option>
+              <option value="C">Turma C</option>
+            </select>
+            <button type="submit">Salvar</button>
+          </form>
+          <ul id="listaTreinos" class="list"></ul>
+        </div>
+      </section>
+
+      <section id="view-presenca" class="view">
+        <h2>Registro de Presença</h2>
+        <div class="card">
+          <div class="presenca-controls">
+            <label for="presencaData">Data</label>
+            <input id="presencaData" type="date" />
+            <label for="presencaTurma">Turma</label>
+            <select id="presencaTurma">
+              <option value="A">Turma A</option>
+              <option value="B">Turma B</option>
+              <option value="C">Turma C</option>
+            </select>
+            <button id="btnLoadAtletas">Carregar Atletas</button>
+            <button id="btnSavePresenca">Salvar Presença</button>
+          </div>
+          <div id="presencaList" class="list-presenca"></div>
+        </div>
+      </section>
+
+      <section id="view-comunicados" class="view">
+        <h2>Comunicados</h2>
+        <div class="card">
+          <form id="formComunicado">
+            <input name="titulo" placeholder="Título" required />
+            <textarea name="mensagem" placeholder="Mensagem" required></textarea>
+            <button type="submit">Enviar comunicado</button>
+          </form>
+          <ul id="listaComunicados" class="list"></ul>
+        </div>
+      </section>
+
+      <section id="view-relatorios" class="view">
+        <h2>Relatórios</h2>
+        <div class="card">
+          <h3>Relatório resumido</h3>
+          <pre id="relatorioResumo" class="relatorio"></pre>
+          <button id="btnDownloadRelatorio">Baixar relatório (.txt)</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal template -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button id="closeModal" class="modal-close">×</button>
+      <h3 id="modalTitle">Novo Atleta</h3>
+      <form id="formAtleta" class="form">
+        <label>Nome<input name="nome" required /></label>
+        <label>Idade<input name="idade" type="number" min="4" max="18" required /></label>
+        <label>Turma<select name="turma"><option value="A">A</option><option value="B">B</option><option value="C">C</option></select></label>
+        <label>Responsável<input name="responsavel" required /></label>
+        <div class="form-actions">
+          <button type="submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

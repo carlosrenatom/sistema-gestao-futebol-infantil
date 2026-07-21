@@ -1,0 +1,61 @@
+:root{
+  --bg:#f6f8fa; --card:#ffffff; --accent:#1f8a37; --muted:#6b7280; --glass: rgba(255,255,255,0.6);
+  --shadow: 0 6px 18px rgba(20,20,30,0.06);
+  --radius:12px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#eef7ef 0%,var(--bg) 100%);color:#0f172a}
+.app{display:flex;min-height:100vh}
+.sidebar{width:280px;background:var(--card);border-right:1px solid #e6e9ee;padding:20px;display:flex;flex-direction:column;gap:20px}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#38b04a);display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;box-shadow:var(--shadow)}
+.brand-text h1{margin:0;font-size:18px}
+.brand-text small{color:var(--muted)}
+.nav{display:flex;flex-direction:column;gap:8px;flex:1}
+.nav-btn{background:transparent;border:0;padding:10px 12px;text-align:left;border-radius:8px;cursor:pointer;font-weight:600;color:#0f172a}
+.nav-btn:hover{background:#f3f6f4}
+.nav-btn.active{background:linear-gradient(90deg, rgba(31,138,55,0.12), rgba(31,138,55,0.06));color:var(--accent)}
+.sidebar-footer{font-size:12px;color:var(--muted);margin-top:auto}
+.main{flex:1;padding:20px;display:flex;flex-direction:column;gap:16px}
+.main-header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.search input{padding:10px 12px;border-radius:10px;border:1px solid #e6e9ee;min-width:280px}
+.actions button{background:var(--accent);border:0;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;margin-left:8px}
+.view{display:none;animation:fade .18s ease}
+.view.active{display:block}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid #eef2f5}
+.card.small{text-align:center}
+.card.small h3{margin:0;font-size:28px;color:var(--accent)}
+.list{list-style:none;padding:0;margin:0}
+.list li{padding:8px 0;border-bottom:1px dashed #eef2f5;color:var(--muted)}
+.table{width:100%;border-collapse:collapse}
+.table thead th{text-align:left;padding:10px;border-bottom:2px solid #eef2f5;color:var(--muted)}
+.table tbody td{padding:10px;border-bottom:1px solid #f4f6f8}
+.table tbody tr:hover{background:#fbfff8}
+.form-inline{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.form-inline input,.form-inline select{padding:8px;border-radius:8px;border:1px solid #e6e9ee}
+.form-inline button{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
+
+.presenca-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.list-presenca{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.presenca-card{background:linear-gradient(180deg,#fff,#fbfff8);padding:10px;border-radius:8px;border:1px solid #eef2f5;display:flex;justify-content:space-between;align-items:center}
+
+.modal{position:fixed;inset:0;background:rgba(5,10,15,0.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal.hidden{display:none}
+.modal-content{width:100%;max-width:520px;background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow);position:relative}
+.modal-close{position:absolute;right:10px;top:10px;border:0;background:transparent;font-size:22px;cursor:pointer}
+.form label{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.form input,.form select,.form textarea{padding:10px;border-radius:8px;border:1px solid #eef2f5}
+.form-actions{text-align:right}
+
+.relatorio{white-space:pre-wrap;background:#0b1220;color:#c7d2fe;padding:12px;border-radius:8px;max-height:240px;overflow:auto}
+.footer{padding:12px;text-align:center;color:var(--muted);font-size:13px}
+
+/* responsive */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .grid-3{grid-template-columns:repeat(2,1fr)}
+  .grid-2{grid-template-columns:1fr}
+}
+@keyframes fade{from{opacity:0}to{opacity:1}}
