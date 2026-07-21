@@ -27,6 +27,8 @@ body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:line
 .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid #eef2f5}
 .card.small{text-align:center}
 .card.small h3{margin:0;font-size:28px;color:var(--accent)}
+.chart-container{position:relative;height:280px;max-height:280px}
+.chart-container canvas{display:block;max-height:280px}
 .list{list-style:none;padding:0;margin:0}
 .list li{padding:8px 0;border-bottom:1px dashed #eef2f5;color:var(--muted)}
 .table{width:100%;border-collapse:collapse}
